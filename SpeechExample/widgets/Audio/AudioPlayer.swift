@@ -13,11 +13,11 @@ public class AudioPlayer: NSObject, AVAudioPlayerDelegate {
     
     public var isPlaying: Bool {
         get {
-            return self.player.isPlaying
+            return self.player?.isPlaying ?? false
         }
     }
-    
-    fileprivate var player: AVAudioPlayer = AVAudioPlayer()
+
+    fileprivate var player: AVAudioPlayer?
     fileprivate var endPlayingComplection: (()->())? = nil
     
     public func play(fileName: String, complection: (()->())? = nil) {
@@ -30,10 +30,10 @@ public class AudioPlayer: NSObject, AVAudioPlayerDelegate {
         }
         do {
             self.player = try AVAudioPlayer(contentsOf: url!)
-            player.volume = 1
-            player.delegate = self
-            player.prepareToPlay()
-            player.play()
+            player!.volume = 1
+            player!.delegate = self
+            player!.prepareToPlay()
+            player!.play()
             self.endPlayingComplection = complection
         } catch let error as NSError {
             print(error.description)
@@ -41,7 +41,7 @@ public class AudioPlayer: NSObject, AVAudioPlayerDelegate {
     }
     
     public func stop() {
-        player.stop()
+        player?.stop()
     }
     
     public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
