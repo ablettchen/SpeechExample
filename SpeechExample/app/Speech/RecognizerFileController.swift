@@ -77,6 +77,7 @@ class RecognizerFileController: ViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         cancelRecognizer(recognizerButton)
+        player.stop()
     }
     
     // UI
